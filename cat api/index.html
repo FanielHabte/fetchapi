@@ -4,26 +4,81 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CatFact</title>
+    <style>
+      h1 {
+        padding-left: 10px;
+        font-size: 40px;
+        margin: 0;
+        padding: 0;
+      }
+      .innerh1 {
+        padding-left: 20px;
+      }
+      .h1container {
+        width: 280px;
+        border-bottom: 3px solid black;
+        margin-bottom: 20px;
+      }
+      html {
+        background-color: aquamarine;
+      }
+      body {
+        margin-left: 20px;
+      }
+      button {
+        margin-left: 170px;
+        margin-top: 10px;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.2s;
+      }
+      button:hover {
+        transform: translateY(-3px);
+      }
+      label {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 20px;
+      }
+      input {
+        margin-left: 5px;
+        border-radius: 20px;
+        height: 30px;
+      }
+    </style>
   </head>
+
   <body>
-    <button onclick="showCatfact()">Get a cat fact</button>
+    <div class="h1container">
+      <div class="innerh1"><h1>Car Api Calls</h1></div>
+    </div>
+    <label for="inputmodel">Car Model:</label>
+    <input type="text" id="inputmodel" placeholder="  Enter car model" />
+    <br />
+    <button onclick="showCarfact()">Get a car fact</button>
+
     <p id="catfact"></p>
   </body>
   <script>
-    async function getcatfact() {
-      const api_endpoint =
-        "https://cat-fact.herokuapp.com/facts/random?amount=1";
-      const Response = await fetch(api_endpoint);
+    async function getcarfact() {
+      const model = document.getElementById("inputmodel").value;
+      const api_endpoint = `https://api.api-ninjas.com/v1/cars?model=${model}`;
+      const Response = await fetch(api_endpoint, {
+        headers: {
+          "X-Api-Key": "zqj1ZM7GsgB3v/vdtrMe4Q==EyTW0VyCY446HUhK",
+        },
+      });
       const json_response = await Response.json();
 
       console.log(json_response);
       return json_response;
     }
 
-    async function showCatfact() {
-      const catfactResponse = await getcatfact();
+    async function showCarfact() {
+      const carfactResponse = await getcarfact();
       const paragraphTag = document.getElementById("catfact");
-      paragraphTag.innerText = catfactResponse.text;
+      paragraphTag.innerText = JSON.stringify(carfactResponse);
+      //zqj1ZM7GsgB3v/vdtrMe4Q==EyTW0VyCY446HUhK
     }
   </script>
 </html>
